@@ -1,31 +1,29 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
-
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import themeFile from './utils/theme';
+import jwtDecode from 'jwt-decode';
 // Components
 import NavBar from './components/Navbar';
-//Pages
+import AuthRoute from './utils/AuthRoute';
 import Home from './components/Home';
-import login from './pages/login';
-import signup from './pages/signup';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#fffd61',
-      main: '#ffca28',
-      dark: '#c79a00',
-      contrastText: '#fff',
-    },
-    secondary: {
-      light: '#484848',
-      main: '#212121',
-      dark: '#000000',
-      contrastText: '#fff',
-    },
-  },
-});
+const theme = createMuiTheme(themeFile);
+let authenticated;
+const token = localStorage.FBIdToken;
+if (token) {
+  const decodedToken = jwtDecode(token);
+  if (decodedToken.exp * 1000 < Date.now()) {
+    window.location.href = '/login';
+    authenticated = false;
+  } else {
+    authenticated = true;
+  }
+}
+
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
@@ -35,8 +33,18 @@ function App() {
           <div className='container'>
             <Switch>
               <Route exact path='/' component={Home} />
-              <Route exact path='/login' component={login} />
-              <Route exact path='/signup' component={signup} />
+              <AuthRoute
+                exact
+                path='/login'
+                component={Login}
+                authenticated={authenticated}
+              />
+              <AuthRoute
+                exact
+                path='/signup'
+                component={Signup}
+                authenticated={authenticated}
+              />
             </Switch>
           </div>
         </Router>
