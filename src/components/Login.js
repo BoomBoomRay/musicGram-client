@@ -13,33 +13,28 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+// Redux
+import { connect } from 'react-redux';
+import { loginUser } from '../redux/actions/userActions';
+
 const styles = (theme) => ({ ...theme.form });
-const Login = ({ classes }) => {
+
+const Login = ({ classes, loginUser, ...props }) => {
+  const { errors, loading } = props.UI;
   const [state, setState] = useState({ email: '', password: '' });
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState([]);
   const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
     const userData = { email: state.email, password: state.password };
-    axios
-      .post('/login', userData)
-      .then((res) => {
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-        setLoading(false);
-        history.push('/');
-      })
-      .catch((err) => {
-        setErrors(err.response.data);
-        setLoading(false);
-      });
+    loginUser(userData, history);
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
+
   return (
     <Grid container className={classes.formContainer}>
       <Grid item sm />
@@ -55,9 +50,9 @@ const Login = ({ classes }) => {
             type='email'
             label='Email'
             className={classes.textField}
-            helperText={errors.email}
-            error={errors.email ? true : false}
-            value={state.email}
+            helperText={errors?.email}
+            error={errors?.email ? true : false}
+            value={state?.email}
             onChange={handleChange}
             fullWidth
           ></TextField>
@@ -67,20 +62,20 @@ const Login = ({ classes }) => {
             type='password'
             label='Password'
             className={classes.textField}
-            helperText={errors.password}
-            error={errors.password ? true : false}
-            value={state.password}
+            helperText={errors?.password}
+            error={errors?.password ? true : false}
+            value={state?.password}
             onChange={handleChange}
             fullWidth
           ></TextField>
-          {errors.general && (
+          {errors?.general && (
             <Typography variant='body2' className={classes.customError}>
-              {errors.general}
+              {errors?.general}
             </Typography>
           )}
-          {errors.error && (
+          {errors?.error && (
             <Typography variant='body2' className={classes.customError}>
-              {errors.error}
+              {errors?.error}
             </Typography>
           )}
           {loading ? (
@@ -119,7 +114,24 @@ const Login = ({ classes }) => {
     </Grid>
   );
 };
+
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
+  loginUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(Login);
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI,
+});
+
+const mapActionToProps = {
+  loginUser,
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionToProps
+)(withStyles(styles)(Login));

@@ -46,10 +46,12 @@ const Signup = ({ classes }) => {
         setLoading(false);
       });
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
+
   console.log(errors);
   return (
     <Grid container className={classes.formContainer}>
