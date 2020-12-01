@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import AppIcon from '../images/musicGramLogo.png';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -13,38 +12,31 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+// Redux
+import { connect } from 'react-redux';
+import { signupUser } from '../redux/actions/userActions';
+
 const styles = (theme) => ({ ...theme.form });
-const Signup = ({ classes }) => {
+
+const Signup = ({ classes, signupUser, ...props }) => {
+  const { errors, loading } = props.UI;
+  const history = useHistory();
   const [state, setState] = useState({
     email: '',
     password: '',
     confirmPassword: '',
     handle: '',
   });
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState([]);
-  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
     const newUserData = {
       email: state.email,
       password: state.password,
       confirmPassword: state.confirmPassword,
       handle: state.handle,
     };
-    axios
-      .post('/signup', newUserData)
-      .then((res) => {
-        localStorage.setItem('FBIdToken', `Bearer ${res.data.token}`);
-        setLoading(false);
-        history.push('/');
-      })
-      .catch((err) => {
-        setErrors(err.response.data);
-        setLoading(false);
-      });
+    signupUser(newUserData, history);
   };
 
   const handleChange = (e) => {
@@ -52,7 +44,6 @@ const Signup = ({ classes }) => {
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  console.log(errors);
   return (
     <Grid container className={classes.formContainer}>
       <Grid item sm />
@@ -68,9 +59,9 @@ const Signup = ({ classes }) => {
             type='email'
             label='Email'
             className={classes.textField}
-            helperText={errors.email}
-            error={errors.email ? true : false}
-            value={state.email}
+            helperText={errors?.email}
+            error={errors?.email ? true : false}
+            value={state?.email}
             onChange={handleChange}
             fullWidth
           ></TextField>
@@ -80,9 +71,9 @@ const Signup = ({ classes }) => {
             type='password'
             label='Password'
             className={classes.textField}
-            helperText={errors.password}
-            error={errors.password ? true : false}
-            value={state.password}
+            helperText={errors?.password}
+            error={errors?.password ? true : false}
+            value={state?.password}
             onChange={handleChange}
             fullWidth
           ></TextField>
@@ -92,9 +83,9 @@ const Signup = ({ classes }) => {
             type='password'
             label='Confirm Password'
             className={classes.textField}
-            helperText={errors.password}
-            error={errors.password ? true : false}
-            value={state.confirmPassword}
+            helperText={errors?.confirmPassword}
+            error={errors?.confirmPassword ? true : false}
+            value={state?.confirmPassword}
             onChange={handleChange}
             fullWidth
           ></TextField>
@@ -104,20 +95,20 @@ const Signup = ({ classes }) => {
             type='text'
             label='Handle'
             className={classes.textField}
-            helperText={errors.handle}
-            error={errors.handle ? true : false}
-            value={state.handle}
+            helperText={errors?.handle}
+            error={errors?.handle ? true : false}
+            value={state?.handle}
             onChange={handleChange}
             fullWidth
           ></TextField>
-          {errors.general && (
+          {errors?.general && (
             <Typography variant='body2' className={classes.customError}>
-              {errors.general}
+              {errors?.general}
             </Typography>
           )}
-          {errors.error && (
+          {errors?.error && (
             <Typography variant='body2' className={classes.customError}>
-              {errors.error}
+              {errors?.error}
             </Typography>
           )}
           {loading ? (
@@ -158,5 +149,20 @@ const Signup = ({ classes }) => {
 };
 Signup.propTypes = {
   classes: PropTypes.object.isRequired,
+  signupUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(Signup);
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI,
+});
+
+const mapActionToProps = {
+  signupUser,
+};
+export default connect(
+  mapStateToProps,
+  mapActionToProps
+)(withStyles(styles)(Signup));

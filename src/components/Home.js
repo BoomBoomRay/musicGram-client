@@ -10,7 +10,6 @@ export default function Home() {
     axios
       .get('/posts')
       .then((res) => {
-        console.log(res.data);
         setPosts(res.data);
       })
       .catch((err) => console.error(err));
