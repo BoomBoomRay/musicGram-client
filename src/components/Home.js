@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 
+import Profile from './Profile';
 import Post from './Post';
 
 export default function Home() {
@@ -26,7 +27,7 @@ export default function Home() {
         {recentPostMarkup}
       </Grid>
       <Grid item sm={4} xs={12}>
-        <p>Profile..j</p>
+        <Profile />
       </Grid>
     </Grid>
   );

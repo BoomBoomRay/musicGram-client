@@ -1,7 +1,11 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+
+// Expiremntal createMui theme --  removes deprecated warnings
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core';
+// import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+
 import themeFile from './utils/theme';
 import jwtDecode from 'jwt-decode';
 
