@@ -51,11 +51,12 @@ export default {
       },
       '& .profile-details': {
         textAlign: 'center',
+        marginTop: 10,
         '& span, svg': {
           verticalAlign: 'middle',
         },
         '& a': {
-          color: '#00bcd4',
+          color: '#ffca28',
         },
       },
       '& hr': {
