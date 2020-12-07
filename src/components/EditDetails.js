@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
+import MyButton from '../utils/MyButton';
 
 // Redux
 import { connect } from 'react-redux';
 import { editUserDetails } from '../redux/actions/userActions';
 
 //Material UI
-import ToolTip from '@material-ui/core/Tooltip';
 import Dialog from '@material-ui/core/Dialog';
 import EditIcon from '@material-ui/icons/Edit';
 import TextField from '@material-ui/core/TextField';
-import { DialogContent, IconButton } from '@material-ui/core';
+import { DialogContent } from '@material-ui/core';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -47,11 +47,13 @@ export const EditDetails = ({ credentials, editUserDetails, classes }) => {
 
   return (
     <>
-      <ToolTip title='Edit Details' placement='top'>
-        <IconButton onClick={handleOpen} className={classes.button}>
-          <EditIcon color='primary' />
-        </IconButton>
-      </ToolTip>
+      <MyButton
+        tip='Edit Details'
+        onClick={handleOpen}
+        btnClassName={classes.button}
+      >
+        <EditIcon color='primary' />
+      </MyButton>
       <Dialog open={open} onClose={handleOpen} fullWidth maxWidth='sm'>
         <DialogTitle>Edit your details</DialogTitle>
         <DialogContent>

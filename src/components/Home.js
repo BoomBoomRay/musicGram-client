@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 
 import Profile from './Profile';
 import Post from './Post';
 
-export default function Home() {
-  const [posts, setPosts] = useState(null);
+// Redux
+import { connect } from 'react-redux';
+import { getPosts } from '../redux/actions/dataActions';
+
+const Home = ({ getPosts, ...props }) => {
+  console.log(props);
+  const { posts, loading } = props.data;
+
   useEffect(() => {
-    axios
-      .get('/posts')
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((err) => console.error(err));
+    getPosts();
   }, []);
 
-  const recentPostMarkup = posts ? (
+  const recentPostMarkup = !loading ? (
     posts.map((post) => <Post key={post.postId} post={post} />)
   ) : (
     <p>Loading...</p>
@@ -31,4 +32,17 @@ export default function Home() {
       </Grid>
     </Grid>
   );
-}
+};
+Home.propTypes = {
+  data: PropTypes.object.isRequired,
+  getPosts: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  data: state.data,
+});
+
+const mapActionToProps = {
+  getPosts,
+};
+export default connect(mapStateToProps, mapActionToProps)(Home);

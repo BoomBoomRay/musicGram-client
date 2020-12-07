@@ -13,6 +13,9 @@ body {
 .nav-bar-container {
   margin: auto;
 }
+.nav-bar-container svg {
+  color: #fff;
+}
 a {
   text-decoration: none;
 }

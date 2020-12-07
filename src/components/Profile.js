@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import dayJs from 'dayjs';
 import EditDetails from './EditDetails.js';
+import MyButton from '../utils/MyButton';
 
 // Material Ui
 import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
 import { Paper, Typography, IconButton } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import Tooltip from '@material-ui/core/Tooltip';
 
 // Icons
 import LocationOn from '@material-ui/icons/LocationOn';
@@ -58,11 +58,13 @@ const Profile = ({ classes, logoutUser, uploadImage, ...props }) => {
               id='imageInput'
               onChange={handleImageChange}
             />
-            <Tooltip title='Edit Profile Picture' placement='top'>
-              <IconButton onClick={handleEditImage} className='button'>
-                <EditIcon color='primary' />
-              </IconButton>
-            </Tooltip>
+            <MyButton
+              tip='Edit profile Picture'
+              onClick={handleEditImage}
+              btnClassName='button'
+            >
+              <EditIcon color='primary' />
+            </MyButton>
           </div>
           <div className='profile-details'>
             <MuiLink
@@ -95,11 +97,9 @@ const Profile = ({ classes, logoutUser, uploadImage, ...props }) => {
             <CalendarToday color='primary' />{' '}
             <span> Joined {dayJs(createdAt).format('MMM YYYY')}</span>
           </div>
-          <Tooltip title='Logout' placement='top'>
-            <IconButton onClick={handleLogout}>
-              <KeyboardReturn color='primary' />
-            </IconButton>
-          </Tooltip>
+          <MyButton tip='Logout' onClick={handleLogout} btnClassName='button'>
+            <KeyboardReturn color='primary' />
+          </MyButton>
           <EditDetails />
         </div>
       </Paper>

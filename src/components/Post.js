@@ -1,8 +1,10 @@
 import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import MyButton from '../utils/MyButton';
 
 // Material UI
 import Card from '@material-ui/core/Card';
@@ -10,6 +12,13 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import ChatIcon from '@material-ui/icons/Chat';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
+// Redux
+import { connect } from 'react-redux';
+import { likePost, unlikePost } from '../redux/actions/dataActions';
 
 const styles = {
   card: {
@@ -25,9 +34,42 @@ const styles = {
   },
 };
 
-const Post = ({ post, classes }) => {
+const Post = ({ post, classes, user, likePost, unlikePost, ...props }) => {
+  const { authenticated } = user;
+
+  const checkLikedPost = () => {
+    if (user.likes && user.likes.find((like) => like.postId === post.postId))
+      return true;
+    else return false;
+  };
+
+  const likeAPost = () => {
+    likePost(post.postId);
+  };
+
+  const unLikeAPost = () => {
+    unlikePost(post.postId);
+  };
+
+  const likeButton = !authenticated ? (
+    <MyButton tip='Like'>
+      <Link to='/login'>
+        <FavoriteBorder color='primary' />
+      </Link>
+    </MyButton>
+  ) : checkLikedPost() ? (
+    <MyButton tip='Undo like' onClick={unLikeAPost}>
+      <FavoriteIcon color='primary' />
+    </MyButton>
+  ) : (
+    <MyButton tip='Like' onClick={likeAPost}>
+      <FavoriteBorder color='primary' />
+    </MyButton>
+  );
+
   dayjs.extend(relativeTime);
   const { userImage, userHandle, createdAt, body } = post;
+  const { likeCount, commentCount } = post;
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -48,9 +90,35 @@ const Post = ({ post, classes }) => {
           {dayjs(createdAt).fromNow()}
         </Typography>
         <Typography variant='body1'>{body}</Typography>
+        {likeButton}
+        <span>{likeCount} likes</span>
+        <MyButton tip='comments'>
+          <ChatIcon color='primary' />
+        </MyButton>
+        <span>{commentCount} comments</span>
       </CardContent>
     </Card>
   );
 };
 
-export default withStyles(styles)(Post);
+Post.propTypes = {
+  user: PropTypes.object.isRequired,
+  post: PropTypes.object.isRequired,
+  likePost: PropTypes.func.isRequired,
+  unlikePost: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+  data: state.data,
+});
+
+const mapActionToProps = {
+  likePost,
+  unlikePost,
+};
+
+export default connect(
+  mapStateToProps,
+  mapActionToProps
+)(withStyles(styles)(Post));
