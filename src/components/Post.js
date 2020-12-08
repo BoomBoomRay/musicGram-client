@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -35,7 +35,7 @@ const styles = {
 };
 
 const Post = ({ post, classes, user, likePost, unlikePost, ...props }) => {
-  const { authenticated } = user;
+  const { authenticated, loading, credentials } = user;
 
   const checkLikedPost = () => {
     if (user.likes && user.likes.find((like) => like.postId === post.postId))
@@ -70,33 +70,38 @@ const Post = ({ post, classes, user, likePost, unlikePost, ...props }) => {
   dayjs.extend(relativeTime);
   const { userImage, userHandle, createdAt, body } = post;
   const { likeCount, commentCount } = post;
+  const newImage =
+    credentials.handle === post.userHandle ? credentials.imageUrl : userImage;
+
   return (
     <Card className={classes.card}>
-      <CardMedia
-        className={classes.image}
-        image={userImage}
-        title='Profile image'
-      ></CardMedia>
-      <CardContent className={classes.content}>
-        <Typography
-          variant='h5'
-          component={Link}
-          to={`/users/${userHandle}`}
-          color='primary'
-        >
-          {userHandle}
-        </Typography>
-        <Typography variant='body2' color='textSecondary'>
-          {dayjs(createdAt).fromNow()}
-        </Typography>
-        <Typography variant='body1'>{body}</Typography>
-        {likeButton}
-        <span>{likeCount} likes</span>
-        <MyButton tip='comments'>
-          <ChatIcon color='primary' />
-        </MyButton>
-        <span>{commentCount} comments</span>
-      </CardContent>
+      <>
+        <CardMedia
+          className={classes.image}
+          image={newImage}
+          title='Profile image'
+        ></CardMedia>
+        <CardContent className={classes.content}>
+          <Typography
+            variant='h5'
+            component={Link}
+            to={`/users/${userHandle}`}
+            color='primary'
+          >
+            {userHandle}
+          </Typography>
+          <Typography variant='body2' color='textSecondary'>
+            {dayjs(createdAt).fromNow()}
+          </Typography>
+          <Typography variant='body1'>{body}</Typography>
+          {likeButton}
+          <span>{likeCount} likes</span>
+          <MyButton tip='comments'>
+            <ChatIcon color='primary' />
+          </MyButton>
+          <span>{commentCount} comments</span>
+        </CardContent>
+      </>
     </Card>
   );
 };
@@ -110,7 +115,6 @@ Post.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  data: state.data,
 });
 
 const mapActionToProps = {

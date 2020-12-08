@@ -6,6 +6,8 @@ import {
   SET_UNAUTHENTICATED,
   LOADING_USER,
 } from '../type';
+
+import { getPosts } from '../actions/dataActions';
 import axios from 'axios';
 
 export const loginUser = (userData, history) => (dispatch) => {
@@ -51,7 +53,6 @@ export const logoutUser = () => (dispatch) => {
 
 export const getUserData = () => (dispatch) => {
   dispatch({ type: LOADING_USER });
-
   axios
     .get('/user')
     .then((res) => {
