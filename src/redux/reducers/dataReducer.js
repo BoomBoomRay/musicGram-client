@@ -4,6 +4,7 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   DELETE_POST,
+  SEND_POST,
 } from '../type';
 
 const initialState = {
@@ -39,6 +40,12 @@ export default function (state = initialState, action) {
       index = state.posts.findIndex((post) => post.postId === action.payload);
       state.posts.splice(index, 1);
       return { ...state };
+    case SEND_POST:
+      return {
+        ...state,
+        posts: [action.payload, ...state.posts],
+      };
+
     default:
       return state;
   }

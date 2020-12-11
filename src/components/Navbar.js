@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MyButton from '../utils/MyButton';
+import PostAPost from './PostAPost';
 
 // Material UI
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
-import AddIcon from '@material-ui/icons/Add';
 import Notifications from '@material-ui/icons/Notifications';
 
 const Navbar = ({ authenticated }) => {
@@ -17,9 +17,7 @@ const Navbar = ({ authenticated }) => {
       <ToolBar className='nav-bar-container'>
         {authenticated ? (
           <>
-            <MyButton tip='Post'>
-              <AddIcon color='secondary' />
-            </MyButton>
+            <PostAPost />
             <Link to='/'>
               <MyButton tip='Home'>
                 <HomeIcon color='secondary' />

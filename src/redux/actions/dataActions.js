@@ -4,6 +4,10 @@ import {
   LIKE_POST,
   UNLIKE_POST,
   DELETE_POST,
+  SEND_POST,
+  SET_ERRORS,
+  CLEAR_ERRORS,
+  LOADING_UI,
 } from '../type';
 import axios from 'axios';
 
@@ -21,6 +25,23 @@ export const getPosts = () => (dispatch) => {
         payload: [],
       });
     });
+};
+
+export const sendPost = (newPost) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post('/post', newPost)
+    .then((res) => {
+      dispatch({ type: SEND_POST, payload: res.data });
+      dispatch({ type: CLEAR_ERRORS });
+    })
+    .catch((err) => {
+      dispatch({ type: SET_ERRORS, payload: err.response.data });
+    });
+};
+
+export const clearError = () => (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };
 
 export const likePost = (postId) => (dispatch) => {
