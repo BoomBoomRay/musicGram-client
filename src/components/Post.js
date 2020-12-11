@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import MyButton from '../utils/MyButton';
+import DeleteBtn from './DeleteBtn';
 
 // Material UI
 import Card from '@material-ui/core/Card';
@@ -24,6 +25,7 @@ const styles = {
   card: {
     display: 'flex',
     marginBottom: 20,
+    position: 'relative',
   },
   image: {
     minWidth: 200,
@@ -34,7 +36,7 @@ const styles = {
   },
 };
 
-const Post = ({ post, classes, user, likePost, unlikePost, ...props }) => {
+const Post = ({ post, classes, user, likePost, unlikePost }) => {
   const { authenticated, loading, credentials } = user;
 
   const checkLikedPost = () => {
@@ -73,6 +75,11 @@ const Post = ({ post, classes, user, likePost, unlikePost, ...props }) => {
   const newImage =
     credentials.handle === post.userHandle ? credentials.imageUrl : userImage;
 
+  const deleteButton =
+    authenticated && credentials.handle === userHandle ? (
+      <DeleteBtn postId={post.postId} />
+    ) : null;
+
   return (
     <Card className={classes.card}>
       <>
@@ -90,6 +97,7 @@ const Post = ({ post, classes, user, likePost, unlikePost, ...props }) => {
           >
             {userHandle}
           </Typography>
+          {deleteButton}
           <Typography variant='body2' color='textSecondary'>
             {dayjs(createdAt).fromNow()}
           </Typography>
