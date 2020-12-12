@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { getPosts } from '../redux/actions/dataActions';
 
 const Home = ({ getPosts, ...props }) => {
-  console.log(props);
   const { posts, loading } = props.data;
 
   useEffect(() => {

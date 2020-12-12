@@ -58,7 +58,7 @@ export const PostAPost = ({ classes, sendPost, ...props }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setState((prevState) => ({ prevState, [name]: value }));
+    setState((prevState) => ({ ...prevState, [name]: value }));
   };
 
   return (
@@ -115,7 +115,7 @@ export const PostAPost = ({ classes, sendPost, ...props }) => {
 
 PostAPost.propTypes = {
   sendPost: PropTypes.func.isRequired,
-  clearError: PropTypes.func.isRequired,
+  clearError: PropTypes.func,
   UI: PropTypes.object.isRequired,
 };
 
