@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import MyButton from '../utils/MyButton';
 import DeleteBtn from './DeleteBtn';
+import PostDialog from './PostDialog';
 
 // Material UI
 import Card from '@material-ui/core/Card';
@@ -70,7 +71,7 @@ const Post = ({ post, classes, user, likePost, unlikePost }) => {
   );
 
   dayjs.extend(relativeTime);
-  const { userImage, userHandle, createdAt, body } = post;
+  const { userImage, userHandle, createdAt, body, postId } = post;
   const { likeCount, commentCount } = post;
   const newImage =
     credentials.handle === post.userHandle ? credentials.imageUrl : userImage;
@@ -108,6 +109,7 @@ const Post = ({ post, classes, user, likePost, unlikePost }) => {
             <ChatIcon color='primary' />
           </MyButton>
           <span>{commentCount} comments</span>
+          <PostDialog postId={postId} userHandle={userHandle} />
         </CardContent>
       </>
     </Card>

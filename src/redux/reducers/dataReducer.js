@@ -5,6 +5,7 @@ import {
   UNLIKE_POST,
   DELETE_POST,
   SEND_POST,
+  SET_POST,
 } from '../type';
 
 const initialState = {
@@ -22,6 +23,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         posts: action.payload,
+        loading: false,
+      };
+    case SET_POST:
+      return {
+        ...state,
+        post: action.payload,
         loading: false,
       };
     case LIKE_POST:
