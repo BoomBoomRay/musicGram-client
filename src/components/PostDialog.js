@@ -71,6 +71,10 @@ export const PostDialog = ({ classes, getPost, postId, UI, post }) => {
     getPost(postId);
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const dialogMarkup = loading ? (
     <div className={classes.spinnerDiv}>
       <CircularProgress size={200} thickness={2} />
@@ -116,19 +120,19 @@ export const PostDialog = ({ classes, getPost, postId, UI, post }) => {
         tipClassName={classes.expandButton}
       >
         <UnfoldMore color='primary' />
-        <Dialog open={open} onClose={handleOpen} fullWidth maxWidth='sm'>
-          <MyButton
-            tip='Close'
-            onClick={handleOpen}
-            tipClassName={classes.closeButton}
-          >
-            <CloseIcon />
-          </MyButton>
-          <DialogContent className={classes.dialogContent}>
-            {dialogMarkup}
-          </DialogContent>
-        </Dialog>
       </MyButton>
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth='sm'>
+        <MyButton
+          tip='Close'
+          onClick={handleClose}
+          tipClassName={classes.closeButton}
+        >
+          <CloseIcon />
+        </MyButton>
+        <DialogContent className={classes.dialogContent}>
+          {dialogMarkup}
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
