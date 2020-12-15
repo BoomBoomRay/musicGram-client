@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -7,16 +7,14 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import MyButton from '../utils/MyButton';
 import DeleteBtn from './DeleteBtn';
 import PostDialog from './PostDialog';
+import LikeButton from './LikeButton';
 
 // Material UI
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ChatIcon from '@material-ui/icons/Chat';
-import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 
 // Redux
 import { connect } from 'react-redux';
@@ -37,42 +35,12 @@ const styles = {
   },
 };
 
-const Post = ({ post, classes, user, likePost, unlikePost }) => {
-  const { authenticated, loading, credentials } = user;
-
-  const checkLikedPost = () => {
-    if (user.likes && user.likes.find((like) => like.postId === post.postId))
-      return true;
-    else return false;
-  };
-
-  const likeAPost = () => {
-    likePost(post.postId);
-  };
-
-  const unLikeAPost = () => {
-    unlikePost(post.postId);
-  };
-
-  const likeButton = !authenticated ? (
-    <MyButton tip='Like'>
-      <Link to='/login'>
-        <FavoriteBorder color='primary' />
-      </Link>
-    </MyButton>
-  ) : checkLikedPost() ? (
-    <MyButton tip='Undo like' onClick={unLikeAPost}>
-      <FavoriteIcon color='primary' />
-    </MyButton>
-  ) : (
-    <MyButton tip='Like' onClick={likeAPost}>
-      <FavoriteBorder color='primary' />
-    </MyButton>
-  );
-
-  dayjs.extend(relativeTime);
+const Post = ({ post, classes, user }) => {
+  const { authenticated, credentials } = user;
   const { userImage, userHandle, createdAt, body, postId } = post;
   const { likeCount, commentCount } = post;
+  dayjs.extend(relativeTime);
+
   const newImage =
     credentials.handle === post.userHandle ? credentials.imageUrl : userImage;
 
@@ -103,7 +71,7 @@ const Post = ({ post, classes, user, likePost, unlikePost }) => {
             {dayjs(createdAt).fromNow()}
           </Typography>
           <Typography variant='body1'>{body}</Typography>
-          {likeButton}
+          <LikeButton postId={postId} />
           <span>{likeCount} likes</span>
           <MyButton tip='comments'>
             <ChatIcon color='primary' />
