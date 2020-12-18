@@ -4,6 +4,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../utils/MyButton';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
+import LikeButton from './LikeButton';
 
 // Redux
 import { connect, useDispatch } from 'react-redux';
@@ -51,20 +52,24 @@ const style = (theme) => ({
   },
 });
 
-export const PostDialog = ({ classes, getPost, postId, UI, post }) => {
+export const PostDialog = ({
+  classes,
+  getPost,
+  postId,
+  UI,
+  post,
+  likeCount,
+}) => {
   const [open, setOpen] = useState(false);
   const { loading } = UI;
   const {
     body,
     createdAt,
-    likeCount,
     commentCount,
     userImage,
     userHandle,
     comments,
   } = post.postData ? post.postData : '';
-
-  useEffect(() => {}, []);
 
   const handleOpen = () => {
     setOpen(!open);
@@ -99,7 +104,7 @@ export const PostDialog = ({ classes, getPost, postId, UI, post }) => {
         </Typography>
         <hr className={classes.invisibleSeparator} />
         <Typography variant='body1'>{body}</Typography>
-        {/* <LikeButton screamId={screamId} /> */}
+        <LikeButton postId={postId} />
         <span>{likeCount} likes</span>
         <MyButton tip='comments'>
           <ChatIcon color='primary' />

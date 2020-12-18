@@ -37,8 +37,15 @@ const styles = {
 
 const Post = ({ post, classes, user }) => {
   const { authenticated, credentials } = user;
-  const { userImage, userHandle, createdAt, body, postId } = post;
-  const { likeCount, commentCount } = post;
+  const {
+    userImage,
+    userHandle,
+    createdAt,
+    body,
+    postId,
+    likeCount,
+    commentCount,
+  } = post;
   dayjs.extend(relativeTime);
 
   const newImage =
@@ -77,7 +84,11 @@ const Post = ({ post, classes, user }) => {
             <ChatIcon color='primary' />
           </MyButton>
           <span>{commentCount} comments</span>
-          <PostDialog postId={postId} userHandle={userHandle} />
+          <PostDialog
+            likeCount={likeCount}
+            postId={postId}
+            userHandle={userHandle}
+          />
         </CardContent>
       </>
     </Card>
