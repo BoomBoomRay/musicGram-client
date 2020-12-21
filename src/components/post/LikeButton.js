@@ -1,5 +1,5 @@
 import React from 'react';
-import MyButton from '../utils/MyButton';
+import MyButton from '../../utils/MyButton';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -9,7 +9,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 
 // Redux
 import { connect } from 'react-redux';
-import { likePost, unlikePost } from '../redux/actions/dataActions';
+import { likePost, unlikePost } from '../../redux/actions/dataActions';
 
 export const LikeButton = ({ user, likePost, unlikePost, postId }) => {
   const { authenticated } = user;

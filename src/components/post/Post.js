@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import MyButton from '../utils/MyButton';
+import MyButton from '../../utils/MyButton';
 import DeleteBtn from './DeleteBtn';
 import PostDialog from './PostDialog';
 import LikeButton from './LikeButton';
@@ -18,7 +18,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 
 // Redux
 import { connect } from 'react-redux';
-import { likePost, unlikePost } from '../redux/actions/dataActions';
+import { likePost, unlikePost } from '../../redux/actions/dataActions';
 
 const styles = {
   card: {

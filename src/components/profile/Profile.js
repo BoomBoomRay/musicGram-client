@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import dayJs from 'dayjs';
-import EditDetails from './EditDetails.js';
-import MyButton from '../utils/MyButton';
+import EditDetails from './EditDetails';
+import MyButton from '../../utils/MyButton';
 
 // Material Ui
 import Button from '@material-ui/core/Button';
@@ -19,7 +19,7 @@ import CalendarToday from '@material-ui/icons/CalendarToday';
 import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 // Redux
 import { connect } from 'react-redux';
-import { uploadImage, logoutUser } from '../redux/actions/userActions';
+import { uploadImage, logoutUser } from '../../redux/actions/userActions';
 
 const styles = (theme) => ({ ...theme.profile });
 

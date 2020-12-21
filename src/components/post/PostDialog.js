@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import MyButton from '../utils/MyButton';
+import MyButton from '../../utils/MyButton';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import LikeButton from './LikeButton';
 
 // Redux
 import { connect, useDispatch } from 'react-redux';
-import { getPost } from '../redux/actions/dataActions';
+import { getPost } from '../../redux/actions/dataActions';
 
 //Material UI
 import Dialog from '@material-ui/core/Dialog';

@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 
-import Profile from './Profile';
-import Post from './Post';
+import Profile from '../components/profile/Profile';
+import Post from '../components/post/Post';
 
 // Redux
 import { connect } from 'react-redux';
