@@ -5,6 +5,8 @@ import MyButton from '../../utils/MyButton';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import LikeButton from './LikeButton';
+import Comments from './Comments';
+import CommentForm from './CommentForm';
 
 // Redux
 import { connect, useDispatch } from 'react-redux';
@@ -24,10 +26,7 @@ import { UnfoldMore } from '@material-ui/icons';
 import ChatIcon from '@material-ui/icons/Chat';
 
 const style = (theme) => ({
-  invisibleSeparator: {
-    border: 'none',
-    margin: 4,
-  },
+  ...theme.form,
   profileImage: {
     maxWidth: 200,
     height: 200,
@@ -61,6 +60,7 @@ export const PostDialog = ({
   likeCount,
 }) => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
   const { loading } = UI;
   const {
     body,
@@ -78,6 +78,7 @@ export const PostDialog = ({
 
   const handleClose = () => {
     setOpen(false);
+    dispatch({ type: 'CLEAR_ERRORS' });
   };
 
   const dialogMarkup = loading ? (
@@ -112,8 +113,8 @@ export const PostDialog = ({
         <span>{commentCount} comments</span>
       </Grid>
       <hr className={classes.visibleSeparator} />
-      {/* <CommentForm screamId={screamId} /> */}
-      {/* <Comments comments={comments} /> */}
+      <CommentForm postId={postId} />
+      <Comments comments={comments} />
     </Grid>
   );
 

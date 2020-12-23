@@ -10,6 +10,7 @@ import {
   LOADING_UI,
   SET_POST,
   STOP_LOADING_UI,
+  SUBMIT_COMMENT,
 } from '../type';
 import axios from 'axios';
 
@@ -47,15 +48,11 @@ export const sendPost = (newPost) => (dispatch) => {
     .post('/post', newPost)
     .then((res) => {
       dispatch({ type: SEND_POST, payload: res.data });
-      dispatch({ type: CLEAR_ERRORS });
+      dispatch(clearError());
     })
     .catch((err) => {
       dispatch({ type: SET_ERRORS, payload: err.response.data });
     });
-};
-
-export const clearError = () => (dispatch) => {
-  dispatch({ type: CLEAR_ERRORS });
 };
 
 export const likePost = (postId) => (dispatch) => {
@@ -80,6 +77,19 @@ export const unlikePost = (postId) => (dispatch) => {
     });
 };
 
+export const submitComment = (postId, commentData) => (dispatch) => {
+  axios
+    .post(`/post/${postId}/comment`, commentData)
+    .then((res) => {
+      console.log('res:', res);
+      dispatch({ type: SUBMIT_COMMENT, payload: res.data });
+      dispatch(clearError());
+    })
+    .catch((err) => {
+      dispatch({ type: SET_ERRORS, payload: err.response.data });
+    });
+};
+
 export const deletePost = (postId) => (dispatch) => {
   axios
     .delete(`/post/${postId}`)
@@ -89,4 +99,8 @@ export const deletePost = (postId) => (dispatch) => {
     .catch((err) => {
       console.error(err);
     });
+};
+
+export const clearError = () => (dispatch) => {
+  dispatch({ type: CLEAR_ERRORS });
 };
