@@ -11,13 +11,16 @@ import { getPosts } from '../redux/actions/dataActions';
 
 const Home = ({ getPosts, ...props }) => {
   const { posts, loading } = props.data;
-
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [getPosts]);
 
   const recentPostMarkup = !loading ? (
-    posts.map((post) => <Post key={post.postId} post={post} />)
+    posts.posts ? (
+      posts?.posts.map((post) => <Post key={post.postId} post={post} />)
+    ) : (
+      posts?.map((post) => <Post key={post.postId} post={post} />)
+    )
   ) : (
     <p>Loading...</p>
   );
