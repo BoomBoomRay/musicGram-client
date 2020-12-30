@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import Post from '../components/post/Post';
 import StaticProfile from '../components/profile/StaticProfile.js';
 import Grid from '@material-ui/core/Grid';
@@ -8,27 +7,43 @@ import { connect } from 'react-redux';
 import { getUserData } from '../redux/actions/dataActions';
 
 export const User = ({ getUserData, data, ...props }) => {
-  const [state, setstate] = useState({});
+  const [state, setState] = useState({ postIdParam: '' });
   const userProfile = data.posts.user;
+
+  const checkParams = () => {
+    const postId = props.match.params.postId;
+    if (postId)
+      setState((prevState) => ({ ...prevState, postIdParam: postId }));
+    else return null;
+  };
 
   useEffect(() => {
     const handle = props.match.params.handle;
+    checkParams();
     getUserData(handle);
-  }, []);
+  }, [getUserData, props.match.params.handle]);
 
-  const { posts, loading } = data.posts;
-  const postMarkup = loading ? (
-    <p>Loading....</p>
-  ) : posts?.length <= 0 ? (
-    <p>No posts from this User</p>
-  ) : (
-    posts?.map((post) => <Post key={post.postId} post={post} />)
-  );
+  const { posts } = data.posts;
+  const { loading } = data;
+  const { postIdParam } = state;
+
+  const postMarkup =
+    posts?.length <= 0 ? (
+      <p>No posts from this User</p>
+    ) : !postIdParam ? (
+      posts?.map((post) => <Post key={post.postId} post={post} />)
+    ) : (
+      posts?.map((post) => {
+        if (post.postId !== postIdParam)
+          return <Post key={post.postId} post={post} />;
+        else return <Post key={post.postId} post={post} openDialog />;
+      })
+    );
 
   return (
     <Grid container spacing={10}>
       <Grid item sm={8} xs={12}>
-        {postMarkup}
+        {loading ? <p>Loading...</p> : postMarkup}
       </Grid>
       <Grid item sm={4} xs={12}>
         {userProfile ? (

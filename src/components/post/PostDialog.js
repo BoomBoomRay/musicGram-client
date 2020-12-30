@@ -58,6 +58,7 @@ export const PostDialog = ({
   UI,
   post,
   likeCount,
+  openDialog,
 }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
@@ -70,6 +71,10 @@ export const PostDialog = ({
     userHandle,
     comments,
   } = post.postData ? post.postData : '';
+
+  useEffect(() => {
+    if (openDialog) handleOpen();
+  }, []);
 
   const handleOpen = () => {
     setOpen(!open);

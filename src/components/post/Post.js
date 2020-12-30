@@ -35,7 +35,7 @@ const styles = {
   },
 };
 
-const Post = ({ post, classes, user }) => {
+const Post = ({ post, classes, user, openDialog }) => {
   const { authenticated, credentials } = user;
   const {
     userImage,
@@ -88,6 +88,7 @@ const Post = ({ post, classes, user }) => {
             likeCount={likeCount}
             postId={postId}
             userHandle={userHandle}
+            openDialog={openDialog}
           />
         </CardContent>
       </>
@@ -100,6 +101,7 @@ Post.propTypes = {
   post: PropTypes.object.isRequired,
   likePost: PropTypes.func.isRequired,
   unlikePost: PropTypes.func.isRequired,
+  openDialog: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
