@@ -87,7 +87,7 @@ const Post = ({ post, classes, user, openDialog }) => {
           <PostDialog
             likeCount={likeCount}
             postId={postId}
-            userHandle={userHandle}
+            userHandleProp={userHandle}
             openDialog={openDialog}
           />
         </CardContent>

@@ -57,10 +57,11 @@ export const PostDialog = ({
   postId,
   UI,
   post,
+  userHandleProp,
   likeCount,
   openDialog,
 }) => {
-  const [open, setOpen] = useState(false);
+  const [state, setState] = useState({ open: false, oldPath: '', newPath: '' });
   const dispatch = useDispatch();
   const { loading } = UI;
   const {
@@ -77,12 +78,24 @@ export const PostDialog = ({
   }, []);
 
   const handleOpen = () => {
-    setOpen(!open);
+    let oldPath = window.location.pathname;
+    const newPath = `/users/${userHandleProp}/post/${postId}`;
+    const { open } = state;
+    if (oldPath === newPath) oldPath = `/users/${userHandleProp}`;
+    window.history.pushState(null, null, newPath);
+    setState((prevState) => ({
+      ...prevState,
+      open: !open,
+      oldPath,
+      newPath,
+    }));
     getPost(postId);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    const { oldPath } = state;
+    window.history.pushState(null, null, oldPath);
+    setState({ open: false });
     dispatch({ type: 'CLEAR_ERRORS' });
   };
 
@@ -123,6 +136,7 @@ export const PostDialog = ({
     </Grid>
   );
 
+  const { open } = state;
   return (
     <>
       <MyButton
@@ -151,7 +165,7 @@ export const PostDialog = ({
 PostDialog.propTypes = {
   getPost: PropTypes.func.isRequired,
   postId: PropTypes.string.isRequired,
-  userHandle: PropTypes.string.isRequired,
+  userHandleProp: PropTypes.string.isRequired,
   post: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
 };
