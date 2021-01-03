@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import MyButton from '../../utils/MyButton';
 import PostAPost from '../post/PostAPost';
+import Notifications from './Notifications';
 
 // Material UI
 import AppBar from '@material-ui/core/AppBar';
 import ToolBar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
-import Notifications from '@material-ui/icons/Notifications';
 
 const Navbar = ({ authenticated }) => {
   return (
@@ -23,9 +23,7 @@ const Navbar = ({ authenticated }) => {
                 <HomeIcon color='secondary' />
               </MyButton>
             </Link>
-            <MyButton tip='Notifications'>
-              <Notifications color='secondary' />
-            </MyButton>
+            <Notifications />
           </>
         ) : (
           <>

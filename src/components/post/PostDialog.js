@@ -14,11 +14,8 @@ import { getPost } from '../../redux/actions/dataActions';
 
 //Material UI
 import Dialog from '@material-ui/core/Dialog';
-import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import { DialogContent } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';

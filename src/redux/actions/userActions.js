@@ -5,6 +5,7 @@ import {
   LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
+  MARK_NOTIFICATIONS_READ,
 } from '../type';
 
 import { getPosts } from '../actions/dataActions';
@@ -80,6 +81,15 @@ export const editUserDetails = (details) => (dispatch) => {
     .post('/user', details)
     .then(() => {
       dispatch(getUserData());
+    })
+    .catch((err) => console.error(err));
+};
+
+export const markNotificationsRead = (notificationIds) => (dispatch) => {
+  axios
+    .post('/notifications', notificationIds)
+    .then(() => {
+      dispatch({ type: MARK_NOTIFICATIONS_READ });
     })
     .catch((err) => console.error(err));
 };
