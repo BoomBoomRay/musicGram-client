@@ -16,7 +16,6 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
-  console.log('data reducer', action);
   switch (action.type) {
     case LOADING_DATA:
       return { ...state, loading: true };

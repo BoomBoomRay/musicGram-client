@@ -1,7 +1,6 @@
-import React, { useState, useEffect, Component, Fragment } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import PropTypes from 'prop-types';
 // MUI stuff
 import Menu from '@material-ui/core/Menu';
@@ -17,7 +16,14 @@ import ChatIcon from '@material-ui/icons/Chat';
 // Redux
 import { connect } from 'react-redux';
 import { markNotificationsRead } from '../../redux/actions/userActions';
+import { withStyles } from '@material-ui/core';
 
+const styles = (theme) => ({
+  fuck: {
+    color: ' white !important',
+    backgroundColor: 'red',
+  },
+});
 export const Notifications = ({
   markNotificationsRead,
   notifications,
@@ -48,7 +54,7 @@ export const Notifications = ({
             badgeContent={
               notifications.filter((noti) => noti.read === false).length
             }
-            color='secondary'
+            color='error'
           >
             <NotificationsIcon />
           </Badge>
@@ -62,7 +68,7 @@ export const Notifications = ({
       notifications.map((noti) => {
         const verb = noti.type === 'like' ? 'liked' : 'commented on';
         const time = dayjs(noti.createdAt).fromNow();
-        const iconColor = noti.read ? 'secondary' : 'primary';
+        const iconColor = noti.read ? 'primary' : 'error';
         const icon =
           noti.type === 'like' ? (
             <FavoriteIcon color={iconColor} style={{ marginRight: 10 }} />
@@ -121,4 +127,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionToProps = { markNotificationsRead };
 
-export default connect(mapStateToProps, mapActionToProps)(Notifications);
+export default connect(
+  mapStateToProps,
+  mapActionToProps
+)(withStyles(styles)(Notifications));

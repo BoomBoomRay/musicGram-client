@@ -5,6 +5,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import dayJs from 'dayjs';
 import EditDetails from './EditDetails';
 import MyButton from '../../utils/MyButton';
+import ProfileSkeleton from '../../utils/ProfileSkeleton';
 
 // Material Ui
 import Button from '@material-ui/core/Button';
@@ -129,7 +130,7 @@ const Profile = ({ classes, logoutUser, uploadImage, ...props }) => {
       </Paper>
     )
   ) : (
-    <p>Loadin...</p>
+    <ProfileSkeleton />
   );
 
   return profileMarkup;

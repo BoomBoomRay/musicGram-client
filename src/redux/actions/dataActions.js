@@ -81,7 +81,6 @@ export const submitComment = (postId, commentData) => (dispatch) => {
   axios
     .post(`/post/${postId}/comment`, commentData)
     .then((res) => {
-      console.log('res:', res);
       dispatch({ type: SUBMIT_COMMENT, payload: res.data });
       dispatch(clearError());
     })

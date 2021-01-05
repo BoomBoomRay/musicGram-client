@@ -1,7 +1,5 @@
 import {
   SET_USER,
-  CLEAR_ERRORS,
-  LOADING_UI,
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
   LOADING_USER,
@@ -17,8 +15,7 @@ const initialState = {
   notifications: [],
 };
 
-export default function (state = initialState, action) {
-  console.log('user reducer', action);
+export default function foo(state = initialState, action) {
   switch (action.type) {
     case SET_AUTHENTICATED:
       return {
