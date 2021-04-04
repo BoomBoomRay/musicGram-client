@@ -6,11 +6,12 @@ A social media application allowing users to communicate with other users via po
 
 1. React.js
 2. Firebase/Firestore
-3. Axios
-4. Redux
-5. Express
-6. Node.js
-7. Material UI
+3. Cloud functions
+4. Axios
+5. Redux
+6. Express
+7. Node.js
+8. Material UI
 
 ## Installations:
 1. Add API keys - see Adding API Key dependencies
@@ -23,9 +24,24 @@ A social media application allowing users to communicate with other users via po
 This program requires the following API keys. These can be obtained here(folow the instructions of website links)
 1. Create firebase project paste config in firebase.js(https://firebase.google.com/docs)
 
+## Features
+
+- create posts
+- like posts
+- comment on posts
+- notifications 
+- firebase authentication
+- photo upload
+- authentication
+
+
 
 ## Screenshots
-
+Login details:
+</br>
+email: 2@gmail.com
+password:123456
+</br>
 live:  https://musicgram-bbb50.web.app/
 
 
