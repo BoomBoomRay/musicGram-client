@@ -1,13 +1,27 @@
-# 1. API Base URL
-Add https://us-central1-musicgram-bbb50.cloudfunctions.net/api as the 'proxy' value in package.json
+## Social Gram
 
-# 2. Install packages
-run `npm install`
+A social media application allowing users to communicate with other users via posts, comments and likes.
 
-# 3. Run project
-run `npm start`
+## Tech/Framework:
 
-# 4. Open it
-go to http://localhost:3000
+1. React.js
+2. Firebase/Firestore
+3. Axios
+4. Redux
+5. Express
+6. Node.js
+7. Material UI
+
+## Installations:
+1. Add API keys - see Adding API Key dependencies
+2. Add https://us-central1-musicgram-bbb50.cloudfunctions.net/api as the 'proxy' value in package.json
+3. npm install
+4. npm start
+5. Head to http://localhost:3000 on the browser
+
+## Adding API Key Dependencies:
+This program requires the following API keys. These can be obtained here(folow the instructions of website links)
+1. Create firebase project paste config in firebase.js(https://firebase.google.com/docs)
+
 
 live:  https://musicgram-bbb50.web.app/
