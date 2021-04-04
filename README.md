@@ -24,4 +24,13 @@ This program requires the following API keys. These can be obtained here(folow t
 1. Create firebase project paste config in firebase.js(https://firebase.google.com/docs)
 
 
+## Screenshots
+
 live:  https://musicgram-bbb50.web.app/
+
+
+![Screen Shot 2021-04-04 at 10 56 17 AM](https://user-images.githubusercontent.com/50201713/113517394-82c94a80-9534-11eb-9a33-2ad840f2dee4.png)
+
+![Screen Shot 2021-04-04 at 10 56 40 AM](https://user-images.githubusercontent.com/50201713/113517396-85c43b00-9534-11eb-858a-921b16d2fb7e.png)
+
+
